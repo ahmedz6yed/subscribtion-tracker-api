@@ -6,11 +6,20 @@ import routerUser from "./routes/user.routes.js";
 import routerAuth from "./routes/auth.routes.js";
 import routerSubscribtions from "./routes/subscribtions.routes.js";
 import connectToDatabase from "./database/mongodb.js";
+import errorMiddleware from "./middlewares/error.middleware.js";
+import cookieParser from "cookie-parser";
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+// Routes
 app.use("/api/users", routerUser);
 app.use("/api/auth", routerAuth);
 app.use("/api/subscribtions", routerSubscribtions);
+
+// Error handling middleware
+app.use(errorMiddleware);
 app.get("/", (req, res) => {
   res.status(200).send({ content: "high" });
 });
