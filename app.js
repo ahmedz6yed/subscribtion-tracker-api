@@ -5,6 +5,7 @@ console.log(PORT);
 import routerUser from "./routes/user.routes.js";
 import routerAuth from "./routes/auth.routes.js";
 import routerSubscribtions from "./routes/subscribtions.routes.js";
+import connectToDatabase from "./database/mongodb.js";
 
 app.use(express.json());
 app.use("/api/users", routerUser);
@@ -13,6 +14,7 @@ app.use("/api/subscribtions", routerSubscribtions);
 app.get("/", (req, res) => {
   res.status(200).send({ content: "high" });
 });
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Server is running on port ${PORT}`);
+  await connectToDatabase();
 });
